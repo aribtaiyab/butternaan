@@ -2,6 +2,8 @@
   position: fixed;
   top: 20px;
   left: 20px;
+  top: max(18px, env(safe-area-inset-top, 18px));
+  left: max(18px, env(safe-area-inset-left, 18px));
   z-index: 200;
   display: inline-flex;
   align-items: center;
@@ -32,4 +34,13 @@
 .back-btn:focus-visible {
   outline: 3px solid var(--pink-accent);
   outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .back-btn {
+    top: max(14px, env(safe-area-inset-top, 14px));
+    left: max(14px, env(safe-area-inset-left, 14px));
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
 }
