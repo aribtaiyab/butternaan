@@ -4,6 +4,7 @@ import Page2 from './pages/Page2';
 import Page3 from './pages/Page3';
 import Page4 from './pages/Page4';
 import Page5 from './pages/Page5';
+import MusicPlayer from './components/MusicPlayer';
 import './App.css';
 
 // Flow: Page1 (Home) → Page2 (Passcode) → Page3 (Gallery) → Page4 (Letter) → Page5 (Secret Vintage Letter)
@@ -44,6 +45,7 @@ function App() {
 
   return (
     <div className="app-root">
+      <MusicPlayer />
       <div
         className={`page-wrapper ${transitioning ? 'is-exiting' : 'is-entering'}`}
         key={currentPage}
