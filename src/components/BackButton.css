@@ -1,0 +1,35 @@
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-brown);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border-pink);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 2px 12px rgba(217, 135, 167, 0.15);
+  animation: fadeIn 0.4s ease both;
+}
+
+.back-btn:hover {
+  background: var(--pink-baby);
+  border-color: var(--pink-accent);
+  transform: translateX(-3px);
+  box-shadow: 0 4px 18px rgba(217, 135, 167, 0.25);
+}
+
+.back-btn:focus-visible {
+  outline: 3px solid var(--pink-accent);
+  outline-offset: 3px;
+}

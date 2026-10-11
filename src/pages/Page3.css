@@ -1,0 +1,293 @@
+/* ── PAGE 3: THREE-PHOTO SCRAPBOOK ───────────────────────────── */
+
+.page3 {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #FFF0F5 0%, #FFF5F8 50%, #FFF9F1 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 56px 20px 64px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.page3__inner {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.page3__inner.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── HEADER ──────────────────────────────────────────────────── */
+.page3__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.page3__header-deco {
+  font-size: 0.9rem;
+  color: var(--pink-accent);
+  letter-spacing: 0.1em;
+}
+
+.page3__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-weight: 700;
+  color: var(--text-brown);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.page3__subtitle {
+  font-size: 0.95rem;
+  color: var(--text-brown-light);
+  max-width: 400px;
+  margin: 0;
+}
+
+/* ── ASYMMETRIC SCRAPBOOK GALLERY ────────────────────────────── */
+.scrapbook-gallery {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+}
+
+.photo-card-wrap {
+  width: 85%;
+  max-width: 380px;
+  animation: fadeInUp 0.7s var(--delay, 0s) ease both;
+  transition: transform 0.3s ease;
+}
+
+/* Asymmetric editorial positioning */
+.photo-card-wrap.pos-left {
+  align-self: flex-start;
+}
+
+.photo-card-wrap.pos-right {
+  align-self: flex-end;
+}
+
+.photo-card {
+  width: 100%;
+  background: var(--bg-cream);
+  padding: 14px 14px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border-pink);
+  box-shadow: 0 8px 24px rgba(217, 135, 167, 0.16);
+  transform: rotate(var(--rotation, 0deg));
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.photo-card:hover {
+  transform: rotate(0deg) scale(1.03);
+  box-shadow: 0 16px 36px rgba(217, 135, 167, 0.28);
+  z-index: 10;
+}
+
+.photo-card__frame {
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--pink-baby);
+  border: 1px solid rgba(242, 198, 215, 0.5);
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+
+.photo-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.photo-card__img.is-loaded {
+  opacity: 1;
+}
+
+/* Targeted fix for First Photo: full image visible without top cropping */
+.photo-card-wrap:first-child .photo-card__frame {
+  background: linear-gradient(135deg, var(--bg-cream) 0%, var(--pink-baby) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-card-wrap:first-child .photo-card__img {
+  object-fit: contain;
+  object-position: top center;
+}
+
+.photo-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--pink-accent);
+  font-size: 2rem;
+}
+
+.photo-card__placeholder p {
+  font-size: 0.85rem;
+  color: var(--text-brown);
+}
+
+.photo-card__caption {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--text-brown);
+  margin: 0;
+  font-style: italic;
+}
+
+.photo-card__sticker {
+  position: absolute;
+  top: -10px;
+  right: 14px;
+  font-size: 1.25rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* ── LIGHTBOX MODAL ──────────────────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(40, 25, 33, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.lightbox__card {
+  background: var(--bg-cream);
+  padding: 16px 16px 20px;
+  border-radius: 24px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--border-pink);
+  color: var(--text-brown);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.lightbox__close:hover {
+  background: var(--pink-baby);
+  transform: scale(1.1);
+}
+
+.lightbox__img-wrap {
+  width: 100%;
+  max-height: 65vh;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox__img {
+  width: 100%;
+  height: auto;
+  max-height: 65vh;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox__img.is-loaded {
+  opacity: 1;
+}
+
+.lightbox__loading {
+  position: absolute;
+  color: var(--white);
+  font-size: 2rem;
+}
+
+.lightbox__caption {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  text-align: center;
+  color: var(--text-brown);
+  margin: 0;
+}
+
+/* ── BUTTON ──────────────────────────────────────────────────── */
+.page3__cta {
+  margin-top: 10px;
+}
+
+.page3__cta-btn {
+  font-size: 1.05rem;
+  padding: 15px 44px;
+  min-width: 180px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .page3 {
+    padding: 44px 14px 48px;
+  }
+  .photo-card-wrap {
+    width: 92%;
+    max-width: 320px;
+  }
+  .photo-card-wrap.pos-left {
+    align-self: flex-start;
+  }
+  .photo-card-wrap.pos-right {
+    align-self: flex-end;
+  }
+}

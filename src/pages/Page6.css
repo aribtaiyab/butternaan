@@ -1,0 +1,280 @@
+/* ── PAGE 6: FINAL BIRTHDAY CELEBRATION ──────────────────────── */
+
+.page6 {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #FFF0F5 0%, #FFF5F8 40%, #FFF9F1 80%, #FFEBF2 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 56px 20px 68px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.page6__inner {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.page6__inner.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── HEADER ──────────────────────────────────────────────────── */
+.page6__top-deco {
+  display: flex;
+  gap: 12px;
+  font-size: 1.1rem;
+  color: var(--pink-accent);
+}
+
+.page6__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.page6__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6.5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text-brown);
+  line-height: 1.2;
+  margin: 0;
+  background: linear-gradient(135deg, #D987A7 0%, #C4607E 50%, #D987A7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page6__subtitle {
+  font-size: 0.95rem;
+  color: var(--text-brown-light);
+  margin: 0;
+  max-width: 360px;
+}
+
+/* ── CELEBRATION CAKE & CANDLE BLOWOUT ANIMATION ─────────────── */
+.celebration-cake-scene {
+  position: relative;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  cursor: pointer;
+  user-select: none;
+  animation: floatY 4s ease-in-out infinite;
+}
+
+.celebration-burst {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.c-burst-item {
+  position: absolute;
+  font-size: 1.2rem;
+  top: 20%;
+  left: 50%;
+  animation: burstOut 1.2s calc(var(--bi) * 0.12s) ease-out forwards;
+}
+
+@keyframes burstOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + (var(--bi) - 3.5) * 35px),
+      calc(-100px - (var(--bi) % 3) * 25px)
+    ) scale(1.3) rotate(360deg);
+  }
+}
+
+.celebration-candles {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 22px;
+  align-items: flex-end;
+  z-index: 8;
+}
+
+.c-candle {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.c-candle-body {
+  width: 10px;
+  height: 32px;
+  border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(180deg, #FFE082 0%, #FFB74D 100%);
+}
+
+.c-flame-wrap {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 22px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.c-flame-wrap.is-extinguished {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px) scale(0);
+}
+
+.c-flame {
+  width: 10px;
+  height: 16px;
+  background: radial-gradient(ellipse at 50% 80%, #FFF59D 0%, #FFA726 50%, #FF6D00 100%);
+  border-radius: 50% 50% 35% 35%;
+  animation: flameDance 0.6s ease-in-out infinite alternate;
+}
+
+.c-glow {
+  position: absolute;
+  inset: -4px;
+  background: radial-gradient(circle, rgba(255, 183, 77, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.c-smoke {
+  position: absolute;
+  bottom: 100%;
+  width: 6px;
+  height: 20px;
+  background: rgba(180, 180, 180, 0.4);
+  border-radius: 50%;
+  animation: smokeRise 1.5s ease-out forwards;
+}
+
+@keyframes smokeRise {
+  0%   { opacity: 0.8; transform: translateY(0) scaleX(1); }
+  100% { opacity: 0; transform: translateY(-30px) scaleX(2.5); }
+}
+
+.c-tier {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.c-tier-top {
+  width: 130px;
+}
+
+.c-tier-top .c-frost {
+  width: 100%;
+  height: 14px;
+  background: #FFF9F1;
+  border-radius: 50% 50% 0 0;
+  box-shadow: 0 -2px 6px rgba(217, 135, 167, 0.3);
+}
+
+.c-tier-top .c-body {
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(180deg, #F8DDE8 0%, #F2C6D7 100%);
+  border-radius: 0 0 8px 8px;
+  box-shadow: inset 0 -4px 8px rgba(196, 96, 126, 0.15);
+}
+
+.c-tier-bottom {
+  width: 190px;
+  margin-top: -2px;
+}
+
+.c-tier-bottom .c-frost {
+  width: 100%;
+  height: 16px;
+  background: #FFF9F1;
+  border-radius: 50% 50% 0 0;
+  box-shadow: 0 -2px 6px rgba(217, 135, 167, 0.3);
+}
+
+.c-tier-bottom .c-body {
+  width: 100%;
+  height: 56px;
+  background: linear-gradient(180deg, #F2C6D7 0%, #D987A7 100%);
+  border-radius: 0 0 10px 10px;
+  box-shadow: inset 0 -5px 10px rgba(196, 96, 126, 0.2);
+}
+
+.c-ribbon {
+  position: absolute;
+  bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.c-plate {
+  width: 220px;
+  height: 14px;
+  background: linear-gradient(180deg, #FFF9F1, #F8DDE8);
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(217, 135, 167, 0.35);
+  margin-top: -2px;
+}
+
+.c-hint {
+  font-size: 0.88rem;
+  color: var(--pink-accent);
+  font-weight: 600;
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* ── BUTTON ──────────────────────────────────────────────────── */
+.page6__cta {
+  margin-top: 8px;
+}
+
+.page6__restart-btn {
+  font-size: 1.05rem;
+  padding: 15px 44px;
+  min-width: 240px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 390px) {
+  .page6 {
+    padding: 40px 14px 48px;
+  }
+  .celebration-cake-scene {
+    width: 180px;
+  }
+  .c-tier-top { width: 110px; }
+  .c-tier-bottom { width: 160px; }
+  .c-plate { width: 180px; }
+}
