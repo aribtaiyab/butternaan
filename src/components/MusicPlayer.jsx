@@ -5,15 +5,69 @@ import './MusicPlayer.css';
 // Fallback to /golden-hour.mp3 in public folder if asset resolution varies
 const AUDIO_SRC = goldenHourAsset || '/golden-hour.mp3';
 
+const INTERACTION_EVENTS = ['click', 'touchend', 'pointerup', 'keydown'];
+
 function MusicPlayer() {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const hasUserToggledRef = useRef(false);
+  const hasStartedRef = useRef(false);
+  const isStartingRef = useRef(false);
+  const isVoiceNoteActiveRef = useRef(false);
+  const removeListenersRef = useRef(null);
 
   // Synchronize audio element state
   const handlePlayEvent = useCallback(() => setIsPlaying(true), []);
   const handlePauseEvent = useCallback(() => setIsPlaying(false), []);
   const handleEndedEvent = useCallback(() => setIsPlaying(false), []);
+
+  const handleInteraction = useCallback((e) => {
+    // If visitor has explicitly paused or toggled the music, never auto-start
+    if (hasUserToggledRef.current) {
+      if (removeListenersRef.current) removeListenersRef.current();
+      return;
+    }
+
+    // Never auto-start while VoiceNotePlayer is playing
+    if (isVoiceNoteActiveRef.current) return;
+
+    // Do not intercept interactions on the floating music button or on the voice note card
+    if (e && e.target && typeof e.target.closest === 'function') {
+      if (e.target.closest('#floating-music-toggle')) return;
+      if (e.target.closest('.voice-note-card')) return;
+    }
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    // If audio is already playing, has already started, or playback is currently in flight, do nothing
+    if (!audio.paused || hasStartedRef.current || isStartingRef.current) {
+      return;
+    }
+
+    isStartingRef.current = true;
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          isStartingRef.current = false;
+          hasStartedRef.current = true;
+          setIsPlaying(true);
+          if (removeListenersRef.current) removeListenersRef.current();
+        })
+        .catch(() => {
+          // Playback rejected by mobile browser restrictions (e.g. scroll gesture or unfulfilled activation)
+          isStartingRef.current = false;
+          // Keep listeners active to retry smoothly on next genuine user interaction
+        });
+    } else {
+      isStartingRef.current = false;
+      hasStartedRef.current = true;
+      setIsPlaying(true);
+      if (removeListenersRef.current) removeListenersRef.current();
+    }
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -26,54 +80,55 @@ function MusicPlayer() {
     audio.addEventListener('pause', handlePauseEvent);
     audio.addEventListener('ended', handleEndedEvent);
 
-    // Attempt autoplay when website first loads
+    const removeInteractionListeners = () => {
+      INTERACTION_EVENTS.forEach((eventType) => {
+        window.removeEventListener(eventType, handleInteraction, { capture: true });
+        document.removeEventListener(eventType, handleInteraction, { capture: true });
+      });
+    };
+    removeListenersRef.current = removeInteractionListeners;
+
+    // Attach listeners on both window and document with capture to catch genuine mobile and desktop gestures
+    INTERACTION_EVENTS.forEach((eventType) => {
+      window.addEventListener(eventType, handleInteraction, { capture: true, passive: true });
+      document.addEventListener(eventType, handleInteraction, { capture: true, passive: true });
+    });
+
+    // Attempt autoplay when website first loads (desktop browsers with permissive policy)
+    isStartingRef.current = true;
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
+          isStartingRef.current = false;
+          hasStartedRef.current = true;
           setIsPlaying(true);
+          removeInteractionListeners();
         })
         .catch(() => {
-          // Autoplay blocked by browser policy without prior interaction
+          // Normal mobile/strict browser autoplay restriction before user interaction
+          isStartingRef.current = false;
           setIsPlaying(false);
-
-          // Listen for the first user interaction to start playback smoothly
-          const startOnInteraction = () => {
-            // Only auto-start if the visitor has not explicitly clicked pause
-            if (!hasUserToggledRef.current && audio.paused) {
-              audio.play()
-                .then(() => setIsPlaying(true))
-                .catch(() => {});
-            }
-            removeInteractionListeners();
-          };
-
-          const removeInteractionListeners = () => {
-            window.removeEventListener('click', startOnInteraction);
-            window.removeEventListener('keydown', startOnInteraction);
-            window.removeEventListener('touchstart', startOnInteraction);
-            window.removeEventListener('pointerdown', startOnInteraction);
-          };
-
-          window.addEventListener('click', startOnInteraction, { once: true, passive: true });
-          window.addEventListener('keydown', startOnInteraction, { once: true, passive: true });
-          window.addEventListener('touchstart', startOnInteraction, { once: true, passive: true });
-          window.addEventListener('pointerdown', startOnInteraction, { once: true, passive: true });
+          // Interaction listeners remain active and will catch the first user tap/click
         });
+    } else {
+      isStartingRef.current = false;
     }
 
     return () => {
+      removeInteractionListeners();
       audio.removeEventListener('play', handlePlayEvent);
       audio.removeEventListener('pause', handlePauseEvent);
       audio.removeEventListener('ended', handleEndedEvent);
     };
-  }, [handlePlayEvent, handlePauseEvent, handleEndedEvent]);
+  }, [handlePlayEvent, handlePauseEvent, handleEndedEvent, handleInteraction]);
 
   // Coordinate with VoiceNotePlayer: pause background music during voice playback
   useEffect(() => {
     let wasPlayingBeforeVoice = false;
 
     const handleVoicePlay = () => {
+      isVoiceNoteActiveRef.current = true;
       const audio = audioRef.current;
       if (audio && !audio.paused) {
         wasPlayingBeforeVoice = true;
@@ -85,8 +140,9 @@ function MusicPlayer() {
     };
 
     const handleVoicePause = () => {
+      isVoiceNoteActiveRef.current = false;
       const audio = audioRef.current;
-      if (wasPlayingBeforeVoice && audio && audio.paused) {
+      if (wasPlayingBeforeVoice && audio && audio.paused && !hasUserToggledRef.current) {
         audio.play()
           .then(() => setIsPlaying(true))
           .catch(() => {});
@@ -107,6 +163,9 @@ function MusicPlayer() {
     // Prevent clicks on the floating control from triggering underlying page elements
     e.stopPropagation();
     hasUserToggledRef.current = true;
+    if (removeListenersRef.current) {
+      removeListenersRef.current();
+    }
 
     const audio = audioRef.current;
     if (!audio) return;
