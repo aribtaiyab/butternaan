@@ -10,6 +10,8 @@ const WAVE_BARS = [
   45, 80, 65, 90, 52, 74, 96, 58, 42, 82, 60, 88, 48, 66, 40, 28
 ];
 
+const SPEEDS = [1, 1.5, 2];
+
 function formatTime(seconds) {
   if (isNaN(seconds) || seconds < 0) return '0:00';
   const mins = Math.floor(seconds / 60);
@@ -20,18 +22,58 @@ function formatTime(seconds) {
 function VoiceNotePlayer() {
   const audioRef = useRef(null);
   const waveformRef = useRef(null);
+  const speedMenuRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [hasError, setHasError] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [showSpeedMenu, setShowSpeedMenu] = useState(false);
+
+  // Synchronize audio element playback rate whenever state changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = playbackRate;
+    }
+  }, [playbackRate]);
+
+  // Close speed menu when clicking outside or pressing Escape
+  useEffect(() => {
+    if (!showSpeedMenu) return;
+
+    const handleClickOutside = (e) => {
+      if (speedMenuRef.current && !speedMenuRef.current.contains(e.target)) {
+        setShowSpeedMenu(false);
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setShowSpeedMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showSpeedMenu]);
 
   // Synchronize play state
   const handlePlay = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = playbackRate;
+    }
     setIsPlaying(true);
     // Pause background music while voice note plays
     window.dispatchEvent(new CustomEvent('voicenote:play'));
-  }, []);
+  }, [playbackRate]);
 
   const handlePause = useCallback(() => {
     setIsPlaying(false);
@@ -44,10 +86,11 @@ function VoiceNotePlayer() {
     setCurrentTime(0);
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
+      audioRef.current.playbackRate = playbackRate;
     }
     // Resume background music when voice note completes
     window.dispatchEvent(new CustomEvent('voicenote:pause'));
-  }, []);
+  }, [playbackRate]);
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -56,10 +99,21 @@ function VoiceNotePlayer() {
   };
 
   const handleLoadedMetadata = () => {
-    if (audioRef.current && !isNaN(audioRef.current.duration)) {
-      setDuration(audioRef.current.duration);
+    if (audioRef.current) {
+      if (!isNaN(audioRef.current.duration)) {
+        setDuration(audioRef.current.duration);
+      }
+      audioRef.current.playbackRate = playbackRate;
       setHasError(false);
     }
+  };
+
+  const handleSpeedSelect = (speed) => {
+    setPlaybackRate(speed);
+    if (audioRef.current) {
+      audioRef.current.playbackRate = speed;
+    }
+    setShowSpeedMenu(false);
   };
 
   const handleError = () => {
@@ -231,6 +285,47 @@ function VoiceNotePlayer() {
             <span>
               {formatTime(currentTime)} <span className="time-sep">/</span> {formatTime(duration)}
             </span>
+          )}
+        </div>
+
+        {/* Playback Speed Control */}
+        <div className="voice-speed-wrap" ref={speedMenuRef}>
+          <button
+            type="button"
+            className={`voice-speed-btn ${showSpeedMenu ? 'is-active' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowSpeedMenu((prev) => !prev);
+            }}
+            aria-label={`Playback speed: ${playbackRate}×. Click to change speed`}
+            aria-expanded={showSpeedMenu}
+            aria-haspopup="listbox"
+          >
+            {playbackRate}×
+          </button>
+
+          {showSpeedMenu && (
+            <div
+              className="voice-speed-menu"
+              role="listbox"
+              aria-label="Playback speed options"
+            >
+              {SPEEDS.map((speed) => (
+                <button
+                  key={speed}
+                  type="button"
+                  role="option"
+                  aria-selected={playbackRate === speed}
+                  className={`voice-speed-option ${playbackRate === speed ? 'is-selected' : ''}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSpeedSelect(speed);
+                  }}
+                >
+                  {speed}×
+                </button>
+              ))}
+            </div>
           )}
         </div>
       </div>

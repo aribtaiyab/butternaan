@@ -202,12 +202,139 @@
   color: #9A7385;
 }
 
+/* ── PLAYBACK SPEED CONTROL ─────────────────────────────────── */
+.voice-speed-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.voice-speed-btn {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #765263;
+  background: rgba(255, 240, 245, 0.65);
+  border: 1px solid rgba(224, 188, 202, 0.65);
+  border-radius: 999px;
+  padding: 2px 7px;
+  min-width: 28px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.18s ease;
+  outline: none;
+  position: relative;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch target buffer for mobile without increasing visual footprint */
+.voice-speed-btn::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  left: -5px;
+  right: -5px;
+}
+
+.voice-speed-btn:hover {
+  background: #FFF0F5;
+  border-color: #C4607E;
+  color: #C4607E;
+}
+
+.voice-speed-btn.is-active,
+.voice-speed-btn:focus-visible {
+  border-color: #C4607E;
+  color: #C4607E;
+  background: #FFF0F5;
+}
+
+.voice-speed-btn:focus-visible {
+  outline: 2px solid rgba(196, 96, 126, 0.4);
+  outline-offset: 1px;
+}
+
+/* Compact Speed Popover Dropdown */
+.voice-speed-menu {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  right: 0;
+  background: #FFFDF9;
+  border: 1px solid rgba(224, 188, 202, 0.85);
+  border-radius: 10px;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow:
+    0 4px 14px rgba(118, 82, 99, 0.12),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+  z-index: 25;
+  animation: speedMenuFade 0.15s ease-out;
+  min-width: 46px;
+}
+
+@keyframes speedMenuFade {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.voice-speed-option {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: #765263;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 8px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 1.1;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  outline: none;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.voice-speed-option:hover {
+  background: rgba(255, 240, 245, 0.85);
+  color: #C4607E;
+}
+
+.voice-speed-option.is-selected {
+  background: #FFF0F5;
+  color: #C4607E;
+  font-weight: 700;
+}
+
+.voice-speed-option:focus-visible {
+  outline: 1.5px solid #C4607E;
+  outline-offset: 1px;
+}
+
 /* ── REDUCED MOTION PREFERENCE ───────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .wave-bar.is-animating.is-filled {
     animation: none !important;
   }
   .voice-note-card {
+    animation: none !important;
+  }
+  .voice-speed-menu {
     animation: none !important;
   }
 }
@@ -229,7 +356,7 @@
   }
 
   .voice-card__player-row {
-    gap: 10px;
+    gap: 8px;
   }
 
   .voice-play-btn {
@@ -243,6 +370,18 @@
   }
 
   .voice-time-display {
-    font-size: 0.75rem;
+    font-size: 0.74rem;
+  }
+
+  .voice-speed-btn {
+    font-size: 0.7rem;
+    min-width: 26px;
+    height: 20px;
+    padding: 1px 5px;
+  }
+
+  .voice-speed-option {
+    font-size: 0.72rem;
+    padding: 5px 8px;
   }
 }
