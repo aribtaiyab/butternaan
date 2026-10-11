@@ -7,7 +7,7 @@ function Page5({ onBack, onRestart }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
+    const t = setTimeout(() => setVisible(true), 80);
     return () => clearTimeout(t);
   }, []);
 
@@ -18,61 +18,92 @@ function Page5({ onBack, onRestart }) {
 
       <div className={`page5__inner ${visible ? 'is-visible' : ''}`}>
         
-        {/* Aesthetic Coffee-Toned Deckled Paper Letter Card */}
+        {/* Antique Stationery Sheet */}
         <article
           className="vintage-letter-card"
           aria-label="Secret vintage letter for Afnan"
           role="region"
         >
-          {/* Subtle Paper Texture & Aged Deckled Edge Overlay */}
+          {/* Subtle Paper Texture & Aged Deckled Edge Overlays */}
           <div className="paper-grain" aria-hidden="true" />
+          <div className="paper-aging-corners" aria-hidden="true" />
           <div className="paper-fold-shadow" aria-hidden="true" />
 
-          {/* Elegant Top Red Roses Embellishment (1-2 Realistic Roses) */}
+          {/* Realistic Red Roses Botanical Top Embellishment (Completely separate from text) */}
           <div className="rose-top-embellishment" aria-hidden="true">
-            <svg viewBox="0 0 240 100" className="rose-svg-art">
+            <svg viewBox="0 0 260 110" className="rose-svg-art" aria-hidden="true">
               <defs>
-                <radialGradient id="roseGlow1" cx="45%" cy="40%" r="55%">
-                  <stop offset="0%" stopColor="#E63952" />
-                  <stop offset="50%" stopColor="#B81D33" />
-                  <stop offset="85%" stopColor="#750E1E" />
-                  <stop offset="100%" stopColor="#4A0812" />
+                <radialGradient id="rosePetalCenter" cx="45%" cy="40%" r="55%">
+                  <stop offset="0%" stopColor="#F24E67" />
+                  <stop offset="35%" stopColor="#C41A32" />
+                  <stop offset="70%" stopColor="#7E0C1E" />
+                  <stop offset="100%" stopColor="#43060E" />
                 </radialGradient>
-                <radialGradient id="roseGlow2" cx="50%" cy="45%" r="50%">
-                  <stop offset="0%" stopColor="#FF526B" />
-                  <stop offset="60%" stopColor="#C8223B" />
-                  <stop offset="100%" stopColor="#630B17" />
+                <radialGradient id="rosePetalOuter" cx="50%" cy="45%" r="55%">
+                  <stop offset="0%" stopColor="#E8304D" />
+                  <stop offset="50%" stopColor="#A81427" />
+                  <stop offset="85%" stopColor="#670815" />
+                  <stop offset="100%" stopColor="#35040B" />
                 </radialGradient>
-                <linearGradient id="leafGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#557F48" />
-                  <stop offset="100%" stopColor="#253D1E" />
+                <radialGradient id="roseBudGrad" cx="45%" cy="35%" r="55%">
+                  <stop offset="0%" stopColor="#FF6B81" />
+                  <stop offset="45%" stopColor="#C91C35" />
+                  <stop offset="80%" stopColor="#780A1A" />
+                  <stop offset="100%" stopColor="#3E050D" />
+                </radialGradient>
+                <linearGradient id="leafGradStem" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#5E8C4E" />
+                  <stop offset="60%" stopColor="#39582D" />
+                  <stop offset="100%" stopColor="#1E3316" />
+                </linearGradient>
+                <linearGradient id="leafGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#7DAE69" />
+                  <stop offset="50%" stopColor="#4F753A" />
+                  <stop offset="100%" stopColor="#2A431F" />
                 </linearGradient>
               </defs>
 
-              {/* Stems & Leaves */}
-              <path d="M40 70 Q90 60 140 75" stroke="#3D5A32" strokeWidth="3" fill="none" />
-              <path d="M50 55 Q30 40 45 28 Q65 35 50 55" fill="url(#leafGrad1)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.15))" />
-              <path d="M170 60 Q190 40 175 28 Q155 35 170 60" fill="url(#leafGrad1)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.15))" />
-              <path d="M105 68 Q115 82 135 78 Q130 62 105 68" fill="url(#leafGrad1)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.15))" />
+              {/* Graceful Stems */}
+              <path d="M48 76 Q95 62 148 78" stroke="#334D27" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              <path d="M148 78 Q182 82 210 70" stroke="#334D27" strokeWidth="2" strokeLinecap="round" fill="none" />
 
-              {/* Left Rose */}
-              <g transform="translate(85, 42)" filter="drop-shadow(0 4px 8px rgba(50,5,12,0.35))">
-                <circle cx="0" cy="0" r="22" fill="url(#roseGlow1)" />
-                <path d="M-16 -10 Q0 -20 16 -10 Q24 2 14 14 Q0 22 -14 14 Q-22 2 -16 -10" fill="#B81D33" opacity="0.9" />
-                <path d="M-10 -7 Q0 -14 10 -7 Q15 1 9 9 Q0 14 -9 9 Q-14 1 -10 -7" fill="#D9364F" />
-                <path d="M-6 -4 Q0 -9 6 -4 Q9 1 5 6 Q0 9 -5 6 Q-9 1 -6 -4" fill="#FF6B81" />
-                <path d="M-2 -2 Q0 -5 2 -2 Q4 0 2 3 Q0 4 -2 3 Q-4 0 -2 -2" fill="#FFA3B1" />
+              {/* Natural Leaves with vein details */}
+              <g filter="drop-shadow(0 2px 4px rgba(40,20,10,0.18))">
+                <path d="M58 60 C38 42 48 24 68 28 C78 38 72 54 58 60 Z" fill="url(#leafGradLight)" />
+                <path d="M58 60 Q63 42 66 30" stroke="#253E1B" strokeWidth="1" fill="none" opacity="0.7" />
+
+                <path d="M192 68 C214 50 206 32 188 34 C176 44 180 60 192 68 Z" fill="url(#leafGradStem)" />
+                <path d="M192 68 Q195 50 190 36" stroke="#1E3316" strokeWidth="1" fill="none" opacity="0.7" />
+
+                <path d="M110 74 C118 90 138 88 142 74 C132 68 118 68 110 74 Z" fill="url(#leafGradStem)" />
               </g>
 
-              {/* Right Main Rose */}
-              <g transform="translate(142, 38)" filter="drop-shadow(0 5px 10px rgba(50,5,12,0.38))">
-                <circle cx="0" cy="0" r="26" fill="url(#roseGlow2)" />
-                <path d="M-20 -12 Q0 -24 20 -12 Q28 2 16 16 Q0 26 -16 16 Q-28 2 -20 -12" fill="#A81D33" />
-                <path d="M-13 -8 Q0 -17 13 -8 Q19 1 11 11 Q0 17 -11 11 Q-17 1 -13 -8" fill="#D9364F" />
-                <path d="M-8 -5 Q0 -11 8 -5 Q11 1 7 7 Q0 11 -7 7 Q-11 1 -8 -5" fill="#FF526B" />
-                <path d="M-4 -3 Q0 -7 4 -3 Q6 0 3 4 Q0 6 -3 4 Q-6 0 -4 -3" fill="#FFA3B1" />
+              {/* Companion Rosebud (Left) */}
+              <g transform="translate(92, 46)" filter="drop-shadow(0 4px 10px rgba(55,6,15,0.32))">
+                <ellipse cx="0" cy="0" rx="18" ry="19" fill="url(#roseBudGrad)" />
+                <path d="M-13 -9 C-2 -18 10 -15 14 -7 C18 3 10 13 -1 16 C-11 14 -16 4 -13 -9 Z" fill="#991224" opacity="0.95" />
+                <path d="M-9 -6 C-1 -13 8 -11 10 -5 C13 2 7 9 0 11 C-8 10 -11 2 -9 -6 Z" fill="#C41D35" />
+                <path d="M-5 -4 C0 -9 6 -8 8 -4 C10 1 5 6 0 7 C-5 6 -7 1 -5 -4 Z" fill="#F0425E" />
+                <path d="M-2 -2 C1 -5 4 -4 5 -2 C6 1 3 4 0 4 C-3 3 -4 1 -2 -2 Z" fill="#FFA5B5" />
+              </g>
+
+              {/* Main Realistic Blooming Rose (Right) */}
+              <g transform="translate(154, 42)" filter="drop-shadow(0 6px 14px rgba(55,6,15,0.36))">
+                {/* Outer Petals */}
+                <circle cx="0" cy="0" r="24" fill="url(#rosePetalOuter)" />
+                <path d="M-22 -10 C-14 -24 14 -24 22 -10 C28 4 18 20 0 24 C-18 20 -28 4 -22 -10 Z" fill="#880E20" />
+                <path d="M-17 -13 C-6 -22 12 -20 18 -10 C24 0 16 16 2 18 C-14 16 -22 1 -17 -13 Z" fill="#B3172E" />
+                {/* Mid Petals */}
+                <path d="M-13 -8 C-4 -16 11 -15 14 -7 C18 2 11 13 0 14 C-11 13 -16 2 -13 -8 Z" fill="url(#rosePetalCenter)" />
+                <path d="M-9 -6 C-2 -12 8 -11 10 -5 C13 2 8 9 0 10 C-8 9 -11 2 -9 -6 Z" fill="#DF2B48" />
+                {/* Inner Petal Swirl */}
+                <path d="M-5 -4 C0 -8 6 -8 7 -4 C9 1 5 5 0 6 C-5 5 -7 0 -5 -4 Z" fill="#F85C76" />
+                <path d="M-2 -2 C1 -5 4 -4 4 -2 C5 0 2 3 0 3 C-2 3 -3 0 -2 -2 Z" fill="#FFB2C0" />
               </g>
             </svg>
+
+            {/* Fine Decorative Dividing Line */}
+            <div className="rose-sep-line" aria-hidden="true" />
           </div>
 
           {/* Letter Title Header */}
@@ -80,10 +111,9 @@ function Page5({ onBack, onRestart }) {
             <h1 className="letter-title">
               A Little Letter for You ♡
             </h1>
-            <div className="letter-sep" aria-hidden="true" />
           </header>
 
-          {/* Exact User Provided Letter Content (Preserving exact wording and formatting) */}
+          {/* Exact User Provided Letter Content (Preserving exact wording, punctuation, spaces, emojis) */}
           <div className="letter-content-body">
             
             <p className="letter-greeting">

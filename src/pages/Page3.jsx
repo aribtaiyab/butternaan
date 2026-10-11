@@ -8,23 +8,57 @@ function PhotoCard({ photo, index, onClick }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError]   = useState(false);
 
-  // Asymmetric rotation: photo 1 (-3°), photo 2 (+2.5°), photo 3 (-2°)
-  const rotation = photo.rotation || (index === 0 ? -3 : index === 1 ? 2.5 : -2);
+  // Original staggered rotations: Photo 1 (-2.5°), Photo 2 (+2.2°), Photo 3 (-1.8°)
+  const rotations = [-2.5, 2.2, -1.8];
+  const rotation = photo.rotation || rotations[index % 3];
+
+  // Original staggered positions: Photo 1 (pos-left), Photo 2 (pos-right), Photo 3 (pos-left)
   const posClass = photo.positionClass || (index % 2 === 0 ? 'pos-left' : 'pos-right');
+
+  // Specific aspect-ratios matching original uncropped photo geometry:
+  // Photo 1 (1280x1208) is ~1:1 square
+  // Photo 2 (936x1280) is ~3:4 portrait
+  // Photo 3 (1080x1050) is ~1:1 square
+  const aspectRatios = ['1 / 1', '3 / 4', '1 / 1'];
+  const frameAspect = aspectRatios[index % 3] || '1 / 1';
+
+  // Tasteful coordinated symbols near the frames (outside the photographs)
+  const symbols = ['✿', '✨', '♡'];
+  const symbol = symbols[index % 3];
 
   return (
     <div
       className={`photo-card-wrap ${posClass}`}
-      style={{ '--delay': `${index * 0.15}s` }}
+      style={{ '--delay': `${index * 0.12}s` }}
     >
       <button
-        className="photo-card"
+        className={`photo-card photo-card--style-${(index % 3) + 1}`}
         style={{ '--rotation': `${rotation}deg` }}
         onClick={() => !error && onClick(photo)}
         aria-label={`View enlarged photo: ${photo.caption}`}
         type="button"
       >
-        <div className="photo-card__frame">
+        {/* Coordinated Scrapbook Decorative Accent (Outside image) */}
+        {index === 0 && (
+          <div className="photo-card__washi-tape" aria-hidden="true" />
+        )}
+        {index === 1 && (
+          <div className="photo-card__craft-pin" aria-hidden="true">✧</div>
+        )}
+        {index === 2 && (
+          <div className="photo-card__corner-tape" aria-hidden="true" />
+        )}
+
+        {/* Delicate decorative badge symbol outside photograph */}
+        <div className={`photo-card__symbol-badge badge--${(index % 3) + 1}`} aria-hidden="true">
+          {symbol}
+        </div>
+
+        {/* Photo Image Frame Aperture */}
+        <div
+          className="photo-card__frame"
+          style={{ aspectRatio: frameAspect }}
+        >
           {error ? (
             <div className="photo-card__placeholder">
               <span>🌸</span>
@@ -41,10 +75,8 @@ function PhotoCard({ photo, index, onClick }) {
             />
           )}
         </div>
+
         <p className="photo-card__caption">{photo.caption}</p>
-        <div className="photo-card__sticker" aria-hidden="true">
-          {['🎀', '⭐', '🌸'][index % 3]}
-        </div>
       </button>
     </div>
   );
@@ -129,7 +161,7 @@ function Page3({ onNext, onBack }) {
         {/* Header */}
         <header className="page3__header">
           <div className="page3__header-deco" aria-hidden="true">
-            🌷 ✦ 🌷
+            ✦ ✧ ✦
           </div>
           <h1 className="page3__title">
             Little moments ♡
@@ -139,7 +171,7 @@ function Page3({ onNext, onBack }) {
           </p>
         </header>
 
-        {/* Asymmetric Editorial Scrapbook Layout */}
+        {/* Elegant Instant-Film Scrapbook Gallery */}
         <section
           className="scrapbook-gallery"
           aria-label="Birthday photo gallery"

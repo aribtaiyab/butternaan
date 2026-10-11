@@ -9,19 +9,19 @@
   padding: 48px 18px 64px;
   position: relative;
   overflow-x: hidden;
-  color: #4A2E16;
+  color: #3E2718;
 }
 
 .page5__inner {
   width: 100%;
-  max-width: 600px;
+  max-width: 620px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 28px;
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .page5__inner.is-visible {
@@ -29,23 +29,37 @@
   transform: translateY(0);
 }
 
-/* ── VINTAGE LETTER STATIONERY CARD ──────────────────────────── */
+/* ── VINTAGE LETTER STATIONERY SHEET ─────────────────────────── */
 .vintage-letter-card {
   width: 100%;
-  background: #F9F4EB;
+  background-color: #FAF4E8;
   background-image:
-    radial-gradient(ellipse at 88% 8%, rgba(180, 130, 80, 0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 12% 92%, rgba(160, 110, 60, 0.07) 0%, transparent 35%);
-  border-radius: 6px 20px 8px 24px;
-  border: 1px solid rgba(190, 150, 110, 0.45);
+    radial-gradient(ellipse at 88% 6%, rgba(160, 110, 60, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 12% 94%, rgba(150, 100, 50, 0.07) 0%, transparent 40%),
+    linear-gradient(180deg, rgba(200, 160, 120, 0.04) 0%, rgba(140, 95, 55, 0.06) 100%);
+  /* Subtly irregular organic deckled-style edges */
+  border-radius: 6px 20px 8px 24px / 20px 8px 24px 6px;
+  border: 1px solid rgba(185, 140, 95, 0.45);
   box-shadow:
-    0 16px 48px rgba(217, 135, 167, 0.22),
-    0 4px 12px rgba(217, 135, 167, 0.12),
-    inset 0 0 40px rgba(160, 110, 60, 0.14);
-  padding: 36px 32px 48px;
+    0 3px 6px rgba(50, 25, 15, 0.04),
+    0 12px 32px rgba(80, 40, 20, 0.08),
+    0 24px 60px rgba(217, 135, 167, 0.18),
+    inset 0 0 45px rgba(155, 105, 55, 0.12);
+  padding: 38px 36px 48px;
   position: relative;
   box-sizing: border-box;
-  animation: fadeInUp 0.75s 0.15s ease both;
+  animation: paperReveal 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+@keyframes paperReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .paper-grain {
@@ -53,18 +67,26 @@
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  opacity: 0.12;
-  background-image: radial-gradient(#4A2E16 0.5px, transparent 0.5px);
-  background-size: 8px 8px;
+  opacity: 0.08;
+  background-image: radial-gradient(#3E2718 0.4px, transparent 0.4px);
+  background-size: 6px 6px;
+}
+
+.paper-aging-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 60px rgba(135, 85, 45, 0.09);
 }
 
 .paper-fold-shadow {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 48%;
+  left: 50%;
   width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(120, 80, 40, 0.08) 30%, rgba(120, 80, 40, 0.08) 70%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(120, 80, 40, 0.06) 20%, rgba(120, 80, 40, 0.06) 80%, transparent 100%);
   pointer-events: none;
 }
 
@@ -72,16 +94,24 @@
 .rose-top-embellishment {
   width: 100%;
   display: flex;
-  justify-content: center;
-  margin-top: -8px;
-  margin-bottom: 6px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -6px;
+  margin-bottom: 22px;
   position: relative;
   z-index: 3;
 }
 
 .rose-svg-art {
-  width: 180px;
-  height: 75px;
+  width: 200px;
+  height: 85px;
+}
+
+.rose-sep-line {
+  width: 140px;
+  height: 1px;
+  margin-top: 8px;
+  background: linear-gradient(90deg, transparent, rgba(175, 125, 75, 0.45), transparent);
 }
 
 /* ── LETTER HEADER ───────────────────────────────────────────── */
@@ -94,31 +124,12 @@
 
 .letter-title {
   font-family: var(--font-serif);
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-size: clamp(1.5rem, 4.5vw, 2.1rem);
   font-weight: 700;
-  color: #4A2E16;
-  margin: 0 0 8px;
+  color: #3E2718;
+  margin: 0;
   letter-spacing: 0.01em;
-}
-
-.letter-sep {
-  width: 120px;
-  height: 1.5px;
-  margin: 0 auto;
-  background: linear-gradient(90deg, transparent, #B87A52, transparent);
-  position: relative;
-}
-
-.letter-sep::after {
-  content: '❦';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #F9F4EB;
-  padding: 0 6px;
-  color: #B87A52;
-  font-size: 0.8rem;
+  line-height: 1.3;
 }
 
 /* ── LETTER CONTENT BODY ─────────────────────────────────────── */
@@ -129,10 +140,10 @@
 
 .letter-greeting {
   font-family: var(--font-serif);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #5C3820;
-  margin-bottom: 20px;
+  color: #4A2E16;
+  margin-bottom: 22px;
   line-height: 1.4;
 }
 
@@ -140,55 +151,31 @@
   font-family: var(--font-serif);
   font-size: 1.05rem;
   line-height: 1.85;
-  color: #4A2E16;
-  margin-bottom: 20px;
+  color: #3E2718;
+  margin-bottom: 22px;
+  letter-spacing: 0.005em;
 }
 
 .letter-ornament {
   text-align: center;
-  color: #B87A52;
+  color: #AF7D4B;
   font-size: 1rem;
   margin: 24px 0;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .letter-highlight {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #8C2335;
-  margin-top: 10px;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #4A2E16;
 }
 
 .letter-closing-text {
   font-size: 1.08rem;
   font-weight: 600;
-  color: #5C3820;
-  margin-top: 24px;
-}
-
-/* ── SIGNATURE & CLOSING ─────────────────────────────────────── */
-.letter-signature-wrap {
-  margin-top: 32px;
-  text-align: center;
-  position: relative;
-  padding-top: 12px;
-}
-
-.letter-signature {
-  font-family: var(--font-script);
-  font-size: clamp(1.6rem, 5vw, 2.1rem);
-  font-weight: 700;
-  color: #8C2335;
-  margin: 0;
-  text-shadow: 0 1px 2px rgba(217, 135, 167, 0.2);
-}
-
-.signature-rose-underlay {
-  color: #B87A52;
-  font-size: 0.85rem;
-  margin-top: 6px;
-  opacity: 0.7;
+  color: #4A2E16;
+  margin-top: 26px;
+  margin-bottom: 0;
 }
 
 /* ── ACTION BUTTON ───────────────────────────────────────────── */
@@ -205,20 +192,22 @@
 /* ── RESPONSIVE ──────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .page5-pink-vintage {
-    padding: 38px 12px 48px;
+    padding: 38px 14px 48px;
   }
   .vintage-letter-card {
-    padding: 24px 18px 32px;
+    padding: 26px 20px 36px;
   }
   .rose-svg-art {
-    width: 140px;
-    height: 60px;
+    width: 160px;
+    height: 70px;
   }
   .letter-para {
     font-size: 0.98rem;
     line-height: 1.75;
+    margin-bottom: 18px;
   }
   .letter-greeting {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
   }
 }

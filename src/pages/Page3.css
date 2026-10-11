@@ -1,4 +1,4 @@
-/* ── PAGE 3: THREE-PHOTO SCRAPBOOK ───────────────────────────── */
+/* ── PAGE 3: THREE-PHOTO ELEGANT SCRAPBOOK ─────────────────────── */
 
 .page3 {
   min-height: 100vh;
@@ -19,7 +19,7 @@
   align-items: center;
   gap: 36px;
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(16px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
@@ -38,82 +38,199 @@
 }
 
 .page3__header-deco {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--pink-accent);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.25em;
+  opacity: 0.85;
 }
 
 .page3__title {
   font-family: var(--font-serif);
-  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
   font-weight: 700;
   color: var(--text-brown);
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
 }
 
 .page3__subtitle {
   font-size: 0.95rem;
   color: var(--text-brown-light);
-  max-width: 400px;
+  max-width: 420px;
   margin: 0;
+  line-height: 1.5;
 }
 
-/* ── ASYMMETRIC SCRAPBOOK GALLERY ────────────────────────────── */
+/* ── STAGGERED SCRAPBOOK GALLERY ─────────────────────────────── */
 .scrapbook-gallery {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 36px;
   position: relative;
 }
 
 .photo-card-wrap {
-  width: 85%;
-  max-width: 380px;
+  width: 82%;
+  max-width: 360px;
   animation: fadeInUp 0.7s var(--delay, 0s) ease both;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
 }
 
-/* Asymmetric editorial positioning */
+/* Original staggered positioning: upper-left, middle-right, lower-left */
 .photo-card-wrap.pos-left {
   align-self: flex-start;
+  margin-left: 16px;
 }
 
 .photo-card-wrap.pos-right {
   align-self: flex-end;
+  margin-right: 16px;
 }
 
+/* ── POLISHED SCRAPBOOK PHOTO CARD ───────────────────────────── */
 .photo-card {
   width: 100%;
-  background: var(--bg-cream);
-  padding: 14px 14px 18px;
-  border-radius: 20px;
-  border: 1px solid var(--border-pink);
-  box-shadow: 0 8px 24px rgba(217, 135, 167, 0.16);
+  background: #FFFDF9; /* Warm ivory border */
+  padding: 16px 16px 26px; /* Classic instant-film / scrapbook chin */
+  border-radius: 14px;
+  border: 1px solid rgba(235, 202, 216, 0.85); /* Delicate blush border */
+  box-shadow:
+    0 4px 10px rgba(60, 25, 35, 0.05),
+    0 12px 28px rgba(217, 135, 167, 0.16),
+    0 1px 3px rgba(0, 0, 0, 0.03); /* Soft realistic shadow */
   transform: rotate(var(--rotation, 0deg));
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
   position: relative;
   text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
+  cursor: pointer;
 }
 
 .photo-card:hover {
-  transform: rotate(0deg) scale(1.03);
-  box-shadow: 0 16px 36px rgba(217, 135, 167, 0.28);
+  transform: rotate(0deg) translateY(-4px) scale(1.025);
+  box-shadow:
+    0 8px 18px rgba(60, 25, 35, 0.07),
+    0 20px 42px rgba(217, 135, 167, 0.28);
+  border-color: rgba(224, 160, 185, 0.95);
   z-index: 10;
 }
 
+.photo-card:focus-visible {
+  outline: 2px solid var(--pink-accent);
+  outline-offset: 3px;
+}
+
+/* ── COORDINATED SCRAPBOOK DETAILS ───────────────────────────── */
+/* Frame 1: Blush washi tape across the top */
+.photo-card__washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 20px;
+  background: rgba(247, 206, 222, 0.78);
+  border: 1px dashed rgba(220, 155, 180, 0.6);
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Frame 2: Delicate craft pin / star at top */
+.photo-card__craft-pin {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFF5F8;
+  border: 1px solid rgba(224, 160, 185, 0.85);
+  box-shadow: 0 2px 6px rgba(217, 135, 167, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: #D987A7;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.photo-card--style-2 {
+  border: 1px solid rgba(240, 195, 215, 0.95);
+  outline: 1px solid rgba(247, 216, 230, 0.6);
+  outline-offset: -5px;
+}
+
+/* Frame 3: Diagonal corner washi tape */
+.photo-card__corner-tape {
+  position: absolute;
+  top: -7px;
+  left: 14px;
+  width: 52px;
+  height: 18px;
+  background: rgba(247, 210, 224, 0.75);
+  border: 1px dashed rgba(220, 155, 180, 0.6);
+  transform: rotate(-18deg);
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── TASTEFUL DECORATIVE SYMBOL BADGES (Outside image) ───────── */
+.photo-card__symbol-badge {
+  position: absolute;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #FFF8FA;
+  border: 1px solid rgba(240, 195, 215, 0.75);
+  box-shadow: 0 2px 8px rgba(217, 135, 167, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.badge--1 {
+  top: -8px;
+  right: -8px;
+  color: #E27396;
+}
+
+.badge--2 {
+  top: -8px;
+  left: -8px;
+  color: #D4A373;
+}
+
+.badge--3 {
+  top: -8px;
+  right: -8px;
+  color: #E27396;
+}
+
+/* ── INNER PHOTO APERTURE ────────────────────────────────────── */
 .photo-card__frame {
   width: 100%;
-  border-radius: 14px;
+  border-radius: 8px;
   overflow: hidden;
-  background: var(--pink-baby);
-  border: 1px solid rgba(242, 198, 215, 0.5);
+  background: #F8F3ED;
+  border: 1px solid rgba(242, 198, 215, 0.65); /* Delicate blush inner accent */
   position: relative;
-  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .photo-card__img {
@@ -122,29 +239,21 @@
   object-fit: cover;
   object-position: center;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .photo-card__img.is-loaded {
   opacity: 1;
 }
 
-/* Targeted fix for First Photo: full image visible without top cropping */
-.photo-card-wrap:first-child .photo-card__frame {
-  background: linear-gradient(135deg, var(--bg-cream) 0%, var(--pink-baby) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.photo-card-wrap:first-child .photo-card__img {
-  object-fit: contain;
-  object-position: top center;
+.photo-card:hover .photo-card__img {
+  transform: scale(1.015);
 }
 
 .photo-card__placeholder {
   width: 100%;
   height: 100%;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -160,18 +269,11 @@
 
 .photo-card__caption {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
-  color: var(--text-brown);
+  font-size: 1rem;
+  color: #5C3820;
   margin: 0;
   font-style: italic;
-}
-
-.photo-card__sticker {
-  position: absolute;
-  top: -10px;
-  right: 14px;
-  font-size: 1.25rem;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  letter-spacing: 0.01em;
 }
 
 /* ── LIGHTBOX MODAL ──────────────────────────────────────────── */
@@ -179,7 +281,7 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(40, 25, 33, 0.75);
+  background: rgba(40, 25, 33, 0.78);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -189,13 +291,13 @@
 }
 
 .lightbox__card {
-  background: var(--bg-cream);
-  padding: 16px 16px 20px;
-  border-radius: 24px;
-  max-width: 500px;
+  background: #FFFDF9;
+  padding: 16px 16px 22px;
+  border-radius: 20px;
+  max-width: 520px;
   width: 100%;
   position: relative;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
   animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   flex-direction: column;
@@ -219,6 +321,7 @@
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   transition: transform 0.2s ease, background 0.2s ease;
+  cursor: pointer;
 }
 
 .lightbox__close:hover {
@@ -229,9 +332,9 @@
 .lightbox__img-wrap {
   width: 100%;
   max-height: 65vh;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  background: #000;
+  background: #1B1216;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -262,11 +365,12 @@
   text-align: center;
   color: var(--text-brown);
   margin: 0;
+  font-style: italic;
 }
 
 /* ── BUTTON ──────────────────────────────────────────────────── */
 .page3__cta {
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .page3__cta-btn {
@@ -280,14 +384,23 @@
   .page3 {
     padding: 44px 14px 48px;
   }
+  .scrapbook-gallery {
+    gap: 28px;
+  }
   .photo-card-wrap {
-    width: 92%;
-    max-width: 320px;
+    width: 88%;
+    max-width: 310px;
   }
   .photo-card-wrap.pos-left {
-    align-self: flex-start;
+    margin-left: 0;
   }
   .photo-card-wrap.pos-right {
-    align-self: flex-end;
+    margin-right: 0;
+  }
+  .photo-card {
+    padding: 14px 14px 22px;
+  }
+  .photo-card__caption {
+    font-size: 0.95rem;
   }
 }

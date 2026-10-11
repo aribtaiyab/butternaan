@@ -108,22 +108,24 @@ function Page1({ onNext }) {
           </div>
         </div>
 
-        {/* ── SUPPLIED CAKE / CAT PHOTOGRAPH ── */}
+        {/* ── KEEPSAKE PHOTOGRAPH FRAME ── */}
         <div className="cake-image-wrap">
-          {imgError ? (
-            <div className="cake-img-placeholder" aria-label="Birthday cake photo placeholder">
-              <span>🎂</span>
-            </div>
-          ) : (
-            <img
-              src={cakeImage}
-              alt="Birthday cake photo"
-              className={`cake-supplied-img ${imgLoaded ? 'is-loaded' : ''}`}
-              onLoad={() => setImgLoaded(true)}
-              onError={() => setImgError(true)}
-              loading="eager"
-            />
-          )}
+          <div className="cake-image-inner-frame">
+            {imgError ? (
+              <div className="cake-img-placeholder" aria-label="Birthday cake photo placeholder">
+                <span>🎂</span>
+              </div>
+            ) : (
+              <img
+                src={cakeImage}
+                alt="Birthday cake photo"
+                className={`cake-supplied-img ${imgLoaded ? 'is-loaded' : ''}`}
+                onLoad={() => setImgLoaded(true)}
+                onError={() => setImgError(true)}
+                loading="eager"
+              />
+            )}
+          </div>
         </div>
 
         {/* ── CUE & BUTTON ── */}

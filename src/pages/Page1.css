@@ -411,20 +411,65 @@
   z-index: 1;
 }
 
-/* ── REFINED PHOTOGRAPH FRAME (IVORY BORDER & SOFT BLUSH SHADOW) ── */
+/* ── KEEPSAKE PHOTOGRAPH FRAME (BLUSH-PINK, ROSE-GOLD, & WARM-IVORY) ── */
 .cake-image-wrap {
   width: 100%;
   max-width: 340px;
+  position: relative;
   padding: 10px;
-  background: linear-gradient(135deg, #FFFDF8 0%, #FCEAF2 50%, #F9E0EC 100%);
-  border-radius: 26px;
-  border: 1.5px solid #F0C4D6;
+  /* Delicate blush-pink outer frame with subtle luminous gradient */
+  background: linear-gradient(145deg, #FDF2F6 0%, #F8D8E5 45%, #F4CEE0 100%);
+  border-radius: 22px;
+  /* Thin, elegant rose-gold outline */
+  border: 1.5px solid #DCA1B3;
+  outline: 1.5px solid rgba(220, 161, 179, 0.45);
+  outline-offset: 3px;
+  /* Soft pink shadow giving gentle depth */
   box-shadow:
-    0 14px 38px rgba(217, 135, 167, 0.24),
-    0 4px 14px rgba(242, 198, 215, 0.35),
-    inset 0 0 0 2.5px #FFFDF9;
+    0 16px 42px rgba(217, 135, 167, 0.26),
+    0 4px 16px rgba(242, 198, 215, 0.38),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
   animation: page1FadeIn 0.8s 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   box-sizing: border-box;
+}
+
+/* Subtle keepsake corner accents in rose gold */
+.cake-image-wrap::before {
+  content: '✦';
+  position: absolute;
+  top: 3px;
+  right: 7px;
+  font-size: 0.65rem;
+  color: #C87D94;
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.cake-image-wrap::after {
+  content: '✦';
+  position: absolute;
+  bottom: 3px;
+  left: 7px;
+  font-size: 0.65rem;
+  color: #C87D94;
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+/* Narrow warm-ivory inner border to create layered keepsake photo effect */
+.cake-image-inner-frame {
+  width: 100%;
+  background: #FFFDF9;
+  border-radius: 15px;
+  padding: 4px;
+  border: 1px solid rgba(230, 205, 215, 0.65);
+  box-shadow:
+    inset 0 1px 3px rgba(180, 120, 145, 0.12),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cake-supplied-img {
@@ -432,11 +477,8 @@
   height: auto;
   max-height: 280px;
   object-fit: contain;
-  border-radius: 18px;
-  border: 1px solid #FFFDF8;
-  outline: 2px solid #F2C6D7;
-  outline-offset: -3px;
-  box-shadow: inset 0 0 10px rgba(217, 135, 167, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(180, 110, 140, 0.1);
   opacity: 0;
   transition: opacity 0.5s ease;
   display: block;
