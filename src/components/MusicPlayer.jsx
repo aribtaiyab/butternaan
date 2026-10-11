@@ -69,6 +69,40 @@ function MusicPlayer() {
     };
   }, [handlePlayEvent, handlePauseEvent, handleEndedEvent]);
 
+  // Coordinate with VoiceNotePlayer: pause background music during voice playback
+  useEffect(() => {
+    let wasPlayingBeforeVoice = false;
+
+    const handleVoicePlay = () => {
+      const audio = audioRef.current;
+      if (audio && !audio.paused) {
+        wasPlayingBeforeVoice = true;
+        audio.pause();
+        setIsPlaying(false);
+      } else {
+        wasPlayingBeforeVoice = false;
+      }
+    };
+
+    const handleVoicePause = () => {
+      const audio = audioRef.current;
+      if (wasPlayingBeforeVoice && audio && audio.paused) {
+        audio.play()
+          .then(() => setIsPlaying(true))
+          .catch(() => {});
+        wasPlayingBeforeVoice = false;
+      }
+    };
+
+    window.addEventListener('voicenote:play', handleVoicePlay);
+    window.addEventListener('voicenote:pause', handleVoicePause);
+
+    return () => {
+      window.removeEventListener('voicenote:play', handleVoicePlay);
+      window.removeEventListener('voicenote:pause', handleVoicePause);
+    };
+  }, []);
+
   const togglePlayback = (e) => {
     // Prevent clicks on the floating control from triggering underlying page elements
     e.stopPropagation();
@@ -82,7 +116,11 @@ function MusicPlayer() {
       setIsPlaying(false);
     } else {
       audio.play()
-        .then(() => setIsPlaying(true))
+        .then(() => {
+          setIsPlaying(true);
+          // Notify any playing voice notes that background music has resumed
+          window.dispatchEvent(new CustomEvent('bgmusic:play'));
+        })
         .catch((err) => {
           console.warn('Audio playback attempt failed:', err);
         });

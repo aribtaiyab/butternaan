@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Particles from '../components/Particles';
+import VoiceNotePlayer from '../components/VoiceNotePlayer';
 import './Page6.css';
 
 function Page6({ onRestart }) {
@@ -91,6 +92,9 @@ function Page6({ onRestart }) {
             {blownOut ? '✨ Make a birthday wish! ✨' : '🌬️ Tap the cake to blow out candles'}
           </p>
         </div>
+
+        {/* Voice Note Player (Immediately above Back to the Birthday Cake button) */}
+        <VoiceNotePlayer />
 
         {/* Action Button: Return to Page 1 */}
         <div className="page6__cta">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import BackButton from '../components/BackButton';
 import Particles from '../components/Particles';
+import VoiceNotePlayer from '../components/VoiceNotePlayer';
 import './Page5.css';
 
 function Page5({ onBack, onRestart }) {
@@ -164,6 +165,9 @@ function Page5({ onBack, onRestart }) {
           </div>
 
         </article>
+
+        {/* Voice Note Player (Immediately above Back to the Birthday Cake button) */}
+        <VoiceNotePlayer />
 
         {/* Action Button: Return to Page 1 */}
         <div className="page5__cta">
