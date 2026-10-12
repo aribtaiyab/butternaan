@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import BackButton from '../components/BackButton';
 import Particles from '../components/Particles';
 import VoiceNotePlayer from '../components/VoiceNotePlayer';
+import keychainImg from '../assets/keychain.jpg';
 import './Page5.css';
 
 function Page5({ onBack, onRestart }) {
@@ -166,8 +167,21 @@ function Page5({ onBack, onRestart }) {
 
         </article>
 
-        {/* Voice Note Player (Immediately above Back to the Birthday Cake button) */}
+        {/* Voice Note Player */}
         <VoiceNotePlayer />
+
+        {/* Personal Surprise: Wooden Keychain Photograph */}
+        <div className="keychain-card">
+          <h2 className="keychain-heading">And this little thing, too… ♡</h2>
+          <div className="keychain-image-wrapper">
+            <img
+              src={keychainImg}
+              alt="Handmade wooden leaf keychain with AFNAN and KASHMIR carvings"
+              className="keychain-image"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
         {/* Action Button: Return to Page 1 */}
         <div className="page5__cta">

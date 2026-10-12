@@ -178,9 +178,65 @@
   margin-bottom: 0;
 }
 
+/* ── HANDMADE WOODEN KEYCHAIN SURPRISE CARD ──────────────────── */
+.keychain-card {
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.keychain-heading {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #5C3D2E;
+  margin: 0 0 10px;
+  text-align: center;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  opacity: 0.92;
+}
+
+.keychain-image-wrapper {
+  width: 100%;
+  background: rgba(255, 253, 249, 0.95);
+  border: 1px solid rgba(224, 188, 202, 0.75);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow:
+    0 4px 16px rgba(118, 82, 99, 0.09),
+    0 1px 3px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.keychain-image-wrapper:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(118, 82, 99, 0.14),
+    0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.keychain-image {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: contain;
+  border-radius: 10px;
+  display: block;
+  user-select: none;
+}
+
 /* ── ACTION BUTTON ───────────────────────────────────────────── */
 .page5__cta {
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .page5__restart-btn {
@@ -209,5 +265,23 @@
   .letter-greeting {
     font-size: 1.2rem;
     margin-bottom: 18px;
+  }
+  .keychain-card {
+    max-width: 240px;
+  }
+  .keychain-heading {
+    font-size: 0.88rem;
+    margin-bottom: 8px;
+  }
+  .keychain-image-wrapper {
+    padding: 8px;
+    border-radius: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keychain-image-wrapper {
+    transition: none !important;
+    transform: none !important;
   }
 }

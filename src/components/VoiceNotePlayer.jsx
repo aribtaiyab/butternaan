@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import voiceNoteAsset from '../voicenote2.mpeg?url';
+import voiceNoteAsset from '../voicenote3.mpeg?url';
 import './VoiceNotePlayer.css';
 
-const AUDIO_SRC = voiceNoteAsset || '/voicenote2.mpeg';
+const AUDIO_SRC = voiceNoteAsset || '/voicenote3.mpeg';
 
 // 32 aesthetic waveform bar heights in percentages (18% to 100%)
 const WAVE_BARS = [
@@ -117,10 +117,10 @@ function VoiceNotePlayer() {
   };
 
   const handleError = () => {
-    // If the imported URL failed, fallback to /voicenote2.mpeg
+    // If the imported URL failed, fallback to /voicenote3.mpeg
     const audio = audioRef.current;
-    if (audio && !audio.src.endsWith('/voicenote2.mpeg')) {
-      audio.src = '/voicenote2.mpeg';
+    if (audio && !audio.src.endsWith('/voicenote3.mpeg')) {
+      audio.src = '/voicenote3.mpeg';
       audio.load();
       return;
     }
